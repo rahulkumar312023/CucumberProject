@@ -1,5 +1,8 @@
 package utilities;
 
+import io.cucumber.java.Scenario;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -47,7 +50,17 @@ public class DriverSetUp {
     }
 
 
-    public static void quitBrowser(){
+    public static void quitBrowser(Scenario scenario){
+        takeScreenShotOnFailedCase(scenario);
         getBrowser().quit();
+    }
+
+    public static void takeScreenShotOnFailedCase(Scenario scenario){
+
+        if (scenario.isFailed()){
+            String name = scenario.getName().replaceAll("", "_");
+            byte[] source = ((TakesScreenshot)getBrowser()).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(source, "image/png", name);
+        }
     }
 }

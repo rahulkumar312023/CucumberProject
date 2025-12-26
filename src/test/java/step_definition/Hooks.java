@@ -2,6 +2,7 @@ package step_definition;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 
 import static utilities.DriverSetUp.openBrowser;
 import static utilities.DriverSetUp.quitBrowser;
@@ -16,7 +17,9 @@ public class Hooks {
     }
 
     @After
-    public void closeBrowser(){
-        quitBrowser();
+    public void closeBrowser(Scenario scenario){
+        quitBrowser(scenario);
     }
+
+
 }
